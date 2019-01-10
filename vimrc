@@ -19,16 +19,46 @@ call plug#begin('~/.vim/plugged')
     Plug 'SirVer/ultisnips'
     Plug 'tpope/vim-fugitive'
     Plug 'airblade/vim-gitgutter'
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
 " aesthetics
 colorscheme slate
 
+" Airline configuration
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'default'
+
+" Nerdtree configuration
+map <C-n> :NERDTreeToggle<CR>
+let NERDTreeIgnore=['\.pyc$', '\~$']
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+
+" File searchs
+map <C-p> :Files<CR>
+
 " key bindings
 
-nmap <F8> :NERDTreeToggle<CR>
-nmap <F7> :TagbarToggle<CR>
-nmap <F7> :TagbarToggle<CR>
+nmap <F8> :TagbarToggle<CR>
+
+
+" Ale Configuration
+"""" Better formatting fo worp/ale
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%] [%...code...%]'
+"""" Enable completion where available.
+let g:ale_completion_enabled = 1
+""" Customize linters that are turned on
+let g:ale_linters = {
+	\   'python': ['flake8'],
+	\}
+let g:ale_set_highlights = 0
+
 
 " enable plugins
 set statusline+=%{gutentags#statusline()}
@@ -40,8 +70,12 @@ let g:jedi#popup_select_first = 0
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsListSnippets='<c-tab>'
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
+" Fix keys
+set backspace=2
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
